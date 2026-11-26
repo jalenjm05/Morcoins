@@ -19,3 +19,26 @@ Create demand, not just access. Plenty of companies already *allow* crypto payme
 ---
 
 Follow us on X: [@morcoins](https://x.com/morcoins)
+
+## Website
+
+This repo holds Morcoin's landing page and waitlist (Next.js).
+
+- **`/`**: landing page plus signup. People give an email, the company they work for, and optional survey answers (industry, company size, role, crypto experience, interests). We never ask for names, phone numbers or addresses.
+- **`/waitlist/<company>`**: a shareable page for each company's waitlist, showing how many people have joined. Variations like "Acme Inc." and "ACME corp" share one waitlist.
+- **`/api/stats`**: survey totals for the team, never emails. Requires `Authorization: Bearer <ADMIN_TOKEN>`.
+
+### Run locally
+
+```bash
+npm install
+npm run dev   # http://localhost:3000
+```
+
+Without a database, signups are saved to `.data/signups.json`, which is for local use only.
+
+### Deploy (Vercel)
+
+1. Import this repo in Vercel.
+2. Add a Postgres database (Vercel → Storage → Neon) so `DATABASE_URL` is set. The `signups` table is created automatically.
+3. Set `ADMIN_TOKEN` to a long random string. See `.env.example`.

@@ -1,0 +1,128 @@
+:root {
+  --bg: #07080c;
+  --surface: #10131b;
+  --surface-2: #161a25;
+  --border: #232838;
+  --text: #eef0f7;
+  --muted: #9097ab;
+  --accent: #c9d3ff;
+  --accent-strong: #4f7cff;
+  --error: #ff8a8a;
+  --radius: 14px;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, rgba(79, 124, 255, 0.18), transparent 60%),
+    var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+main, .nav, .footer { width: 100%; max-width: 1040px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+
+/* Nav */
+.nav { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; padding-bottom: 20px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; text-decoration: none; letter-spacing: -0.01em; }
+.brand-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--accent-strong); box-shadow: 0 0 0 4px var(--accent); }
+.nav-cta { font-size: 0.9rem; color: var(--accent); text-decoration: none; }
+.nav-cta:hover { text-decoration: underline; }
+
+/* Hero */
+.hero { padding-top: 72px; padding-bottom: 56px; text-align: center; }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem; font-weight: 700; color: var(--accent); margin: 0 0 14px; }
+h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); line-height: 1.08; letter-spacing: -0.03em; margin: 0 auto 20px; max-width: 14ch; }
+.accent { color: var(--accent); }
+.lede { color: var(--muted); font-size: 1.15rem; max-width: 60ch; margin: 0 auto 32px; }
+
+.button {
+  display: inline-block; border: 0; cursor: pointer; text-decoration: none;
+  background: var(--accent-strong); color: #fff; font-weight: 700; font-size: 1rem;
+  padding: 14px 24px; border-radius: 999px; transition: transform 0.1s ease, background 0.15s ease;
+}
+.button:hover { background: #678dff; }
+.button:active { transform: translateY(1px); }
+.button:disabled { opacity: 0.6; cursor: wait; }
+.button.small { padding: 10px 16px; font-size: 0.9rem; white-space: nowrap; }
+
+/* Sections */
+section { padding: 40px 0; }
+.section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); letter-spacing: -0.02em; margin: 0 0 24px; }
+
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.pillars article, .offer-card, .card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px;
+}
+.pillars h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin: 0 0 10px; }
+.pillars p { margin: 0; color: var(--muted); }
+
+.offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.offer-card h3 { margin: 0 0 12px; font-size: 1.25rem; }
+.offer-card ul { margin: 0; padding-left: 20px; color: var(--muted); }
+.offer-card li + li { margin-top: 8px; }
+
+.steps { list-style: none; counter-reset: step; padding: 0; margin: 0; display: grid; gap: 12px; }
+.steps li { counter-increment: step; position: relative; padding: 18px 20px 18px 64px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--muted); }
+.steps li strong { color: var(--text); }
+.steps li::before {
+  content: counter(step); position: absolute; left: 20px; top: 16px;
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--accent); color: #0b1030; font-weight: 800; font-size: 0.9rem;
+}
+
+/* Form */
+.join { padding-bottom: 72px; }
+.form { display: grid; gap: 20px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field { display: grid; gap: 8px; font-size: 0.92rem; }
+.field > span { color: var(--text); font-weight: 600; }
+input, select {
+  width: 100%; font: inherit; color: var(--text); background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;
+}
+input:focus, select:focus { outline: 2px solid var(--accent-strong); outline-offset: 1px; border-color: transparent; }
+.survey { border: 1px dashed var(--border); border-radius: var(--radius); padding: 20px; margin: 0; display: grid; gap: 16px; min-width: 0; }
+.survey legend { padding: 0 8px; font-weight: 700; }
+.muted { color: var(--muted); font-weight: 400; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.chip span {
+  display: inline-block; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--surface-2); color: var(--muted); font-weight: 500; cursor: pointer; font-size: 0.9rem;
+}
+.chip input:checked + span { background: var(--accent); color: #0b1030; border-color: var(--accent); }
+.chip input:focus-visible + span { outline: 2px solid var(--accent-strong); outline-offset: 2px; }
+
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.error { color: var(--error); margin: 0; }
+.fine { color: var(--muted); font-size: 0.82rem; margin: 0; }
+
+.success h3 { font-size: 1.6rem; letter-spacing: -0.02em; margin: 0 0 10px; }
+.success p { color: var(--muted); }
+.share { display: flex; gap: 10px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+.share code { flex: 1; min-width: 0; overflow-wrap: anywhere; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: 0.85rem; }
+
+/* Company waitlist page */
+.company { min-height: 60vh; }
+.count { font-size: 1.2rem; color: var(--muted); margin: 0 0 16px; }
+.count strong { color: var(--text); font-size: 2.4rem; display: block; letter-spacing: -0.02em; }
+
+.footer { display: flex; justify-content: space-between; gap: 16px; padding-top: 24px; padding-bottom: 40px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
+
+@media (max-width: 760px) {
+  .pillars, .offer-grid, .row { grid-template-columns: 1fr; }
+  .hero { padding-top: 40px; }
+  main, .nav, .footer { padding-left: 16px; padding-right: 16px; }
+}
