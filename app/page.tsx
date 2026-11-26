@@ -54,7 +54,7 @@ export default async function Home({
             <ul>
               <li>Use crypto at the businesses you already go to, with no expertise required.</li>
               <li>Earn and spend it in ways that make sense day to day, not just hold it.</li>
-              <li>A say in what we build: your survey answers shape the product.</li>
+              <li>A say in where we go first: the companies with the most signups get Morcoin first.</li>
             </ul>
           </div>
           <div className="offer-card">
@@ -72,12 +72,11 @@ export default async function Home({
         <h2 className="section-title">How the waitlist works</h2>
         <ol className="steps">
           <li>
-            <strong>Sign up with your email.</strong> That&apos;s the only contact detail we ask
-            for. No name, phone number or address.
+            <strong>Sign up with your email.</strong> That&apos;s all we need from you.
           </li>
           <li>
-            <strong>Tell us where you work.</strong> You join a waitlist for your company, alongside
-            your coworkers.
+            <strong>Tell us where you work.</strong> Just the company name. You join its waitlist
+            alongside your coworkers.
           </li>
           <li>
             <strong>Share it.</strong> The bigger your company&apos;s waitlist, the stronger the case

@@ -3,13 +3,11 @@
 import { neon } from "@neondatabase/serverless";
 import { promises as fs } from "fs";
 import path from "path";
-import type { SurveyAnswers } from "./survey";
 
 export type NewSignup = {
   email: string;
   companyName: string;
   companySlug: string;
-  survey: SurveyAnswers;
 };
 
 export type WaitlistResult =
@@ -22,7 +20,6 @@ export type Stats = {
   totalSignups: number;
   totalCompanies: number;
   topCompanies: CompanySummary[];
-  breakdowns: Record<string, Record<string, number>>;
 };
 
 interface Store {
@@ -33,28 +30,18 @@ interface Store {
 
 type Row = NewSignup & { id: number; createdAt: string };
 
-const SURVEY_KEYS = ["industry", "companySize", "role", "cryptoExperience", "wouldUse"] as const;
-
 function buildStats(rows: Row[]): Stats {
   const companies = new Map<string, CompanySummary>();
-  const breakdowns: Record<string, Record<string, number>> = { interests: {} };
-  for (const key of SURVEY_KEYS) breakdowns[key] = {};
 
   for (const r of rows) {
     const c = companies.get(r.companySlug) ?? { companyName: r.companyName, companySlug: r.companySlug, total: 0 };
     c.total++;
     companies.set(r.companySlug, c);
-    for (const key of SURVEY_KEYS) {
-      const v = r.survey[key] ?? "unanswered";
-      breakdowns[key][v] = (breakdowns[key][v] ?? 0) + 1;
-    }
-    for (const i of r.survey.interests) breakdowns.interests[i] = (breakdowns.interests[i] ?? 0) + 1;
   }
   return {
     totalSignups: rows.length,
     totalCompanies: companies.size,
-    topCompanies: [...companies.values()].sort((a, b) => b.total - a.total).slice(0, 25),
-    breakdowns,
+    topCompanies: [...companies.values()].sort((a, b) => b.total - a.total).slice(0, 50),
   };
 }
 
@@ -122,7 +109,6 @@ class PostgresStore implements Store {
           email         TEXT NOT NULL UNIQUE,
           company_name  TEXT NOT NULL,
           company_slug  TEXT NOT NULL,
-          survey        JSONB NOT NULL DEFAULT '{}'::jsonb,
           created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
         )`;
       await this.sql`CREATE INDEX IF NOT EXISTS signups_company_slug_idx ON signups (company_slug, id)`;
@@ -136,8 +122,8 @@ class PostgresStore implements Store {
   async addSignup(s: NewSignup): Promise<WaitlistResult> {
     await this.init();
     const inserted = await this.sql`
-      INSERT INTO signups (email, company_name, company_slug, survey)
-      VALUES (${s.email}, ${s.companyName}, ${s.companySlug}, ${JSON.stringify(s.survey)}::jsonb)
+      INSERT INTO signups (email, company_name, company_slug)
+      VALUES (${s.email}, ${s.companyName}, ${s.companySlug})
       ON CONFLICT (email) DO NOTHING
       RETURNING id`;
     if (inserted.length === 0) return { status: "duplicate" };
@@ -166,14 +152,13 @@ class PostgresStore implements Store {
 
   async getStats(): Promise<Stats> {
     await this.init();
-    const rows = await this.sql`SELECT id, company_name, company_slug, survey FROM signups ORDER BY id`;
+    const rows = await this.sql`SELECT id, company_name, company_slug FROM signups ORDER BY id`;
     return buildStats(
       rows.map((r) => ({
         id: Number(r.id),
         email: "",
         companyName: r.company_name,
         companySlug: r.company_slug,
-        survey: r.survey as SurveyAnswers,
         createdAt: "",
       })),
     );

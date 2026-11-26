@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { companySlug, cleanCompanyName } from "@/lib/company";
 import { getStore } from "@/lib/store";
-import { cleanSurvey } from "@/lib/survey";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -34,7 +33,6 @@ export async function POST(req: Request) {
       email,
       companyName,
       companySlug: slug,
-      survey: cleanSurvey(body),
     });
     return NextResponse.json(result);
   } catch (err) {

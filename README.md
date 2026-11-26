@@ -24,9 +24,9 @@ Follow us on X: [@morcoins](https://x.com/morcoins)
 
 This repo holds Morcoin's landing page and waitlist (Next.js).
 
-- **`/`**: landing page plus signup. People give an email, the company they work for, and optional survey answers (industry, company size, role, crypto experience, interests). We never ask for names, phone numbers or addresses.
+- **`/`**: landing page plus signup. People give two things: an email and the name of the company they work for.
 - **`/waitlist/<company>`**: a shareable page for each company's waitlist, showing how many people have joined. Variations like "Acme Inc." and "ACME corp" share one waitlist.
-- **`/api/stats`**: survey totals for the team, never emails. Requires `Authorization: Bearer <ADMIN_TOKEN>`.
+- **`/api/stats`**: signup counts per company for the team, never emails. Requires `Authorization: Bearer <ADMIN_TOKEN>`.
 
 ### Run locally
 

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { timingSafeEqual } from "crypto";
 import { getStore } from "@/lib/store";
 
-// Aggregate survey results for the Morcoin team. Never returns emails.
+// Signup totals per company for the Morcoin team. Never returns emails.
 // Usage: curl -H "Authorization: Bearer $ADMIN_TOKEN" https://<site>/api/stats
 export async function GET(req: Request) {
   const token = process.env.ADMIN_TOKEN;
